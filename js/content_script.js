@@ -25,7 +25,7 @@ var worldLinks = new Array(new Array()),
 
 var creatureY = 0,
     creatureX = 0,
-    creatureXPixel = 0,
+    creatureXPixel = 0, // TODO to implement more smooth motions
     creatureYPixel = 0;
 
 /* // laggy
@@ -137,10 +137,13 @@ function draw()
 {
     if (!running) return;
     
+    // first run - document takes time to load
     if (!foundLinks)
     {
         foundLinks = loadLinks();
     }
+
+    gameOver(); // is it?
 
     background('#ffffff');
     drawMap();
@@ -158,6 +161,16 @@ function draw()
         scrollTop: $("body").offset().top +
                    (creatureY / 2 * world.cellSize),
     }, 0);
+}
+
+function gameOver()
+{
+    // out of bound
+    if (((creatureY * world.cellSize) > $(document).height()) ||
+       ((creatureX * world.cellSize) > $(document).width()))
+    {
+       location.reload();
+    }
 }
 
 function fromGround()
