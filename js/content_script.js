@@ -24,16 +24,6 @@ var creatureY = 0,
     creatureXPixel = 0, // TODO to implement more smooth motions
     creatureYPixel = 0;
 
-/* // laggy
-// prevents scrolling on keys
-window.addEventListener("keydown", function(e) {
-    // space and arrow keys
-    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-        e.preventDefault();
-    }
-}, false);
-*/
-
 function buildWorld()
 {
 	world = new CAWorld({
@@ -289,28 +279,6 @@ function keyPressed(isJumping)
   mouseY = pixelY;
 }
 
-/*
-var evolveCounter = 0
-
-function evolveCharacter()
-{
-  if (evolveCounter == 0)
-  {
-    charImageLeft = imgArray[0];
-    charImageRight = imgArray[1];
-  }
-  else if (evolveCounter == 1)
-  {
-      // TODO
-  }
-  if (evolveCounter == 2)
-  {
-  }
-  if (evolveCounter == 3)
-  {
-  }
-}
-*/
 function loadLinks()
 {
     var links = [],
@@ -357,36 +325,6 @@ function loadLinks()
     return found;
 }
 
-// sarah
-/*document.onkeypress = function(evt) {
-   // prevent the default action (scroll / move caret)
-   evt.preventDefault();
-    evt = evt || window.event;
-    var charCode = evt.keyCode || evt.which;
-    var charStr = String.fromCharCode(charCode);
-    alert(evt.which);
-
-    if(charStr ==='r')
-    {
-      creaturePixelX ++;
-      10;
-    }
-
-    if(charStr ==='l')
-    {
-      creaturePixelX --;
-    }
-    if(charStr ==='u')
-    {
-      creaturePixelY --;
-    }
-    if(charStr ==='d')
-    {
-      creaturePixelY ++;
-    }
-
-};*/
-
 function isEnglish(letter)
 {
     return /^[a-zA-Z]+$/.test(letter);
@@ -421,7 +359,7 @@ function extractPageText()
     {
         var letter = text[i];
 
-        if ((letter != '') && (isEnglish(letter)))
+        if ((letter == ' ') || (isEnglish(letter)))
         {
             letters.push(letter);
         }
@@ -498,7 +436,7 @@ function drawMap()
             // links
             if (open && (worldLinks[j][i] != ''))
             {
-                fill(240, 240, 240);
+                fill(68, 154, 254);
                 rect(pixelXPos, pixelYPos, pixelHeight, pixelWidth);
                 image(door["black"], pixelXPos, pixelYPos);
                 //drawText('?', 20, pixelXPos, pixelYPos,
