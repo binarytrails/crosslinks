@@ -157,6 +157,8 @@ function cellContentInteraction()
     // write in cell the char codes
     $(document).keypress(function(e)
     {
+        e.preventDefault();
+
         // spacebar
         if (e.keyCode == 32)
         {
