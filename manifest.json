@@ -18,6 +18,7 @@
           "libs/jquery.min.js",
           "libs/p5.js",
           "libs/p5.dom.js",
+          "libs/p5.play.js",
           "libs/cellauto.js"
       ],
       "matches": [ "http://*/*", "https://*/*" ],

@@ -127,6 +127,8 @@ function setup()
 
 function draw()
 {
+    camera.off(); // p5.play compatibility
+    
     if (!running) return;
     
     // first run - document takes time to load
@@ -135,7 +137,7 @@ function draw()
         foundLinks = loadLinks();
     }
 
-    gameOver(); // is it?
+    //gameOver(); // is it?
 
     background('#ffffff');
     drawMap();
@@ -230,7 +232,10 @@ function keyPressed(isJumping)
           document.location.href = worldLinks[creatureX][creatureY];
       }
   }
-  
+  else if (keyDown ('r'))
+  {
+      location.reload();
+  }
   try
   {
       // draws chacacter
@@ -274,7 +279,9 @@ function keyPressed(isJumping)
 
   if (!isJumping)
   {
-      image(creature[4]["right"], pixelX, pixelY);
+        fill(225, 225, 225);
+        rect(pixelX, pixelY, world.cellSize, world.cellSize);
+        //image(creature[4]["right"], pixelX, pixelY);
   }
 
   // move mouse on it
@@ -491,7 +498,7 @@ function drawMap()
             // links
             if (open && (worldLinks[j][i] != ''))
             {
-                fill(220, 100, 100);
+                fill(240, 240, 240);
                 rect(pixelXPos, pixelYPos, pixelHeight, pixelWidth);
                 image(door["black"], pixelXPos, pixelYPos);
                 //drawText('?', 20, pixelXPos, pixelYPos,
