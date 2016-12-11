@@ -154,12 +154,24 @@ function cellContentInteraction()
 {
     var letter = pageLetters[creatureX][creatureY];
 
-    if (letter != '')
+    // write in cell the char codes
+    $(document).keypress(function(e)
     {
-        capturedLetters.push(letter);
-        pageLetters[creatureX][creatureY] = '';
-        //console.log(capturedLetters);
-    }
+        // spacebar
+        if (e.keyCode == 32)
+        {
+            capturedLetters.push(letter);
+            pageLetters[creatureX][creatureY] = '';
+            //console.log(capturedLetters);
+        }
+        else
+        {
+            var charCode = e.keyCode || e.which;
+            var charStr = String.fromCharCode(charCode);
+            console.log(charStr);
+            pageLetters[creatureX][creatureY] = charStr;
+        }
+    });
 }
 
 function gameOver()
@@ -269,8 +281,11 @@ function keyPressed(isJumping)
 
   if (!isJumping)
   {
-        fill(225, 225, 225);
+        // eraser
+        fill(0, 0, 0, 80);
+        //fill(225, 225, 225, 20);
         rect(pixelX, pixelY, world.cellSize, world.cellSize);
+        // or..
         //image(creature[4]["right"], pixelX, pixelY);
   }
 
