@@ -27,9 +27,9 @@ var creatureY = 0,
 function buildWorld()
 {
 	world = new CAWorld({
-		height: 25, // y
-		width: 20,  // x
 		//height: Math.ceil($(document).height() / 64), // on window load...
+		height: 20, // columns
+		width: 30,  // rows
 		cellSize: 64
 	});
 
@@ -90,7 +90,7 @@ function setup()
       }
       
       door["white"] = loadImage(
-          chrome.extension.getURL("images/blackDoor.png")
+          chrome.extension.getURL("images/whiteDoor.png")
       );
       door["black"] = loadImage(
           chrome.extension.getURL("images/blackDoor.png")
