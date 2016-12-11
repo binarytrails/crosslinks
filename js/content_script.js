@@ -253,10 +253,6 @@ function keyPressed(isJumping)
           document.location.href = worldLinks[creatureX][creatureY];
       }
   }
-  else if (keyDown ('r'))
-  {
-      location.reload();
-  }
   try
   {
       // draws chacacter
