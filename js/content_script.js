@@ -6,11 +6,8 @@ var world,   // .grid[x or width][y or height]
 var worldLinks = new Array(new Array()),
     foundLinks = false;
 
-var portalImage,
-    treesImage;
-
 var pageWords,
-    pageTextArray;
+    pageLetters = new Array(new Array());
 
 // sarah
 
@@ -20,9 +17,6 @@ var body = document.getElementsByTagName('body')[0];
 var count = 0;
 
 var creature = {};
-
-var worldLinks = new Array(new Array()),
-    foundLinks = false;
 
 var creatureY = 0,
     creatureX = 0,
@@ -120,19 +114,15 @@ function setup()
 
       $('*').css({'cursor': 'none'});
 
-      pageTextArray = extractPageText();
       buildWorld();
-
-
+      initArrays();
+      extractPageText();
     }
     else {
       noLoop();
     }
   });
 }
-
-var worldLinks = new Array(new Array()),
-    foundLinks = false;
 
 function draw()
 {
@@ -157,11 +147,27 @@ function draw()
     
     drawMouse();
 
+    cellContentInteraction();
+
     // window scroll
     /*$('html, body').animate({
         scrollTop: $("body").offset().top +
                    (creatureY / 2 * world.cellSize),
     }, 0);*/
+}
+
+var capturedLetters = [];
+
+function cellContentInteraction()
+{
+    var letter = pageLetters[creatureX][creatureY];
+
+    if (letter != '')
+    {
+        capturedLetters.push(letter);
+        pageLetters[creatureX][creatureY] = '';
+        //console.log(capturedLetters);
+    }
 }
 
 function gameOver()
@@ -316,13 +322,9 @@ function loadLinks()
         }
     });
 
-    worldLinks = new Array(world.width);
-
     // find their places in the world
     for (var i = 0; i < world.width; i++)
     {
-        worldLinks[i] = new Array(world.height);
-
         for (var j = 0; j < world.height; j++)
         {
             var open = world.grid[i][j].open,
@@ -345,7 +347,6 @@ function loadLinks()
         }
     }
 
-    console.log(worldLinks);
     return found;
 }
 
@@ -390,13 +391,24 @@ function getEnglishWords(text)
     return /\b[^\d\W]+\b/gi.exec(text);
 }
 
+function initArrays()
+{
+    worldLinks = new Array(world.width);
+    pageLetters = new Array(world.width);
+    
+    for (var i = 0; i < world.width; i++)
+    {
+        worldLinks[i] = new Array(world.height);
+        pageLetters[i] = new Array(world.height);
+    }
+}
+
 function extractPageText()
 {
-    var array = [],
+    var letters = [],
         text = $('p').text();
 
     pageWords = getEnglishWords(text);
-    console.log(pageWords);
 
     for (var i = 0; i < text.length; i++)
     {
@@ -404,11 +416,26 @@ function extractPageText()
 
         if ((letter != '') && (isEnglish(letter)))
         {
-            array.push(letter);
+            letters.push(letter);
         }
     }
 
-    return array;
+    // convert to 2d matrix
+    for (var i = 0; i < world.width; i++)
+    {
+        var line = letters.splice(0, world.height);
+
+        for (var j = 0; j < world.height; j++)
+        {
+            if (line[j])
+            {
+                pageLetters[i][j] = line[j];
+            }
+        }
+    }
+    //console.log('pageLetter');
+    //console.log(pageLetters);
+    //console.log(pageLetters[0, 10]);
 }
 
 function drawText(l, f, x, y, h, w, lRgb, bgRgb)
@@ -444,8 +471,8 @@ function drawMap()
                 pixelXPos = i * pixelHeight,
                 pixelYPos = j * pixelWidth;
 
-            var letter = pageTextArray[i + j];
-            letter = letter.toUpperCase();
+            var letter = pageLetters[i][j];
+            letter = letter ? letter.toUpperCase() : '';
 
             if (open)
             {
