@@ -157,10 +157,10 @@ function draw()
     drawMouse();
 
     // window scroll
-    $('html, body').animate({
+    /*$('html, body').animate({
         scrollTop: $("body").offset().top +
                    (creatureY / 2 * world.cellSize),
-    }, 0);
+    }, 0);*/
 }
 
 function gameOver()
@@ -378,32 +378,45 @@ function loadLinks()
 
 };*/
 
+function isEnglish(word)
+{
+  var d = word.charCodeAt(0);
+  
+  return (
+      (d > 64 && d < 91) ||     // A-Z
+      (d > 96 && d < 123)       // a-z
+  );
+}
+
 function extractPageText()
 {
     var array = [],
-        raw = $('body').text();
+        raw = $('p').text();
+
+    console.log(raw);
 
     for (var i = 0; i < raw.length; i++)
     {
         var letter = raw[i];
 
-        if (letter != '')
+        if ((letter != '') && (isEnglish(letter)))
         {
             array.push(letter);
         }
     }
 
+    console.log(array);
     return array;
 }
 
-function drawText(l, f, x, y, h, w, bgRgb)
+function drawText(l, f, x, y, h, w, lRgb, bgRgb)
 {
     // background
     fill(bgRgb[0], bgRgb[1], bgRgb[2]);
     rect(x, y, h, w);
 
     // text
-    fill(255, 255, 255);
+    fill(lRgb[0], lRgb[1], lRgb[2]);
     textSize(h);
     textFont("Helvetica");
     // x + h/5 serves as an textAlign(CENTER)
@@ -429,21 +442,21 @@ function drawMap()
                 pixelXPos = i * pixelHeight,
                 pixelYPos = j * pixelWidth;
 
+            var letter = textArray[i + j];
+            letter = letter.toUpperCase();
+
             if (open)
             {
-                drawText('', 20, pixelXPos, pixelYPos,
+                drawText(letter, 20, pixelXPos, pixelYPos,
                          pixelHeight, pixelWidth,
+                         [0, 0, 0],
                          [255, 255, 255]);
             }
             else // (!open)
             {
-                var letter = '';
-
-                letter = textArray[i + j];
-                letter = letter.toUpperCase();
-
                 drawText(letter, 20, pixelXPos, pixelYPos,
                          pixelHeight, pixelWidth,
+                         [255, 255, 255],
                          [0, 0, 0]);
             }
             // links
