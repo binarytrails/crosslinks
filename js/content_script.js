@@ -37,9 +37,9 @@ window.addEventListener("keydown", function(e) {
 function buildWorld()
 {
 	world = new CAWorld({
-		height: 15,
-		width: 20,
-		//height: Math.ceil($(document).height() / 64),
+		height: 25, // y
+		width: 20,  // x
+		//height: Math.ceil($(document).height() / 64), // on window load...
 		cellSize: 64
 	});
 
@@ -393,13 +393,13 @@ function getEnglishWords(text)
 
 function initArrays()
 {
-    worldLinks = new Array(world.width);
-    pageLetters = new Array(world.width);
+    worldLinks = new Array(world.height);
+    pageLetters = new Array(world.height);
     
-    for (var i = 0; i < world.width; i++)
+    for (var i = 0; i < world.height; i++)
     {
-        worldLinks[i] = new Array(world.height);
-        pageLetters[i] = new Array(world.height);
+        worldLinks[i] = new Array(world.width);
+        pageLetters[i] = new Array(world.width);
     }
 }
 
