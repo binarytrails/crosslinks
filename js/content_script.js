@@ -5,7 +5,8 @@ var world,
     door = {};
 
 var worldLinks = new Array(new Array()),
-    foundLinks = false;
+    foundLinks = false,
+    linkDiv;
 
 var pageWords,
     pageLetters = new Array(new Array());
@@ -108,7 +109,26 @@ function setup()
       buildWorld();
       initArrays();
       extractPageText();
+
       lastKeyPressedTimer = millis();
+
+      linkDiv = document.createElement('div');
+      linkDiv.id = 'p5LinkDiv';
+      $(linkDiv).appendTo(body);
+
+      $('#p5LinkDiv').css({
+        position: "fixed",
+        width: "100%",
+        height: "auto",
+        left: 0,
+        bottom: 0,
+        margin: "auto",
+        background: "black",
+        opacity: 0.9,
+        "z-index": 30000,
+        "font-size": "14pt",
+        color: "rgb(68, 154, 254)"
+      });
     }
     else {
       noLoop();
@@ -178,21 +198,17 @@ function cellContentInteraction()
         }
     });
 
+    // get links at current cell
     var href = worldLinks[creatureX][creatureY].toUpperCase();
 
     // show links urls
     if (href != '')
     {
-        var wih = window.innerHeight;
-
-        // bg
-        fill(0, 0, 0, 200);
-        rect(0, wih - world.cellSize,
-             world.cellSize * world.height, world.cellSize);
-        // text
-        fill(0, 200, 0);
-        textSize(40);
-        text(href, 0, wih - 20);
+        $(linkDiv).html(href);
+    }
+    else
+    {
+        $(linkDiv).html('');
     }
 }
 
