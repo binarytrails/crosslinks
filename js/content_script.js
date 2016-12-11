@@ -88,7 +88,7 @@ function setup()
             "right": {}
           };
       }
-      
+
       door["white"] = loadImage(
           chrome.extension.getURL("images/whiteDoor.png")
       );
@@ -121,9 +121,9 @@ var lastKeyPressedTimer;
 function draw()
 {
     camera.off(); // p5.play compatibility
-    
+
     if (!running) return;
-    
+
     // first run - document takes time to load
     if (!foundLinks)
     {
@@ -134,13 +134,13 @@ function draw()
 
     background('#ffffff');
     drawMap();
-    
+
     //evolveCharacter();
-    
+
     // draws chacacter
     isJumping = false;// addGravity();
     keyPressed(isJumping);
-    
+
     drawMouse();
 
     cellContentInteraction();
@@ -177,6 +177,23 @@ function cellContentInteraction()
             pageLetters[creatureX][creatureY] = charStr;
         }
     });
+
+    var href = worldLinks[creatureX][creatureY].toUpperCase();
+
+    // show links urls
+    if (href != '')
+    {
+        var wih = window.innerHeight;
+
+        // bg
+        fill(0, 0, 0, 200);
+        rect(0, wih - world.cellSize,
+             world.cellSize * world.height, world.cellSize);
+        // text
+        fill(0, 200, 0);
+        textSize(40);
+        text(href, 0, wih - 20);
+    }
 }
 
 function gameOver()
@@ -289,7 +306,7 @@ function keyPressed(isJumping)
 
   var pixelX = creatureX * world.cellSize,
       pixelY = creatureY * world.cellSize;
-  
+
   //console.log("x,y = ", creatureX, creatureY,
   //                      world.grid[creatureX][creatureY].open);
   //console.log("px,py = ", pixelX, pixelY);
@@ -370,7 +387,7 @@ function initArrays()
 {
     worldLinks = new Array(world.height);
     pageLetters = new Array(world.height);
-    
+
     for (var i = 0; i < world.height; i++)
     {
         worldLinks[i] = new Array(world.width);
@@ -423,7 +440,7 @@ function drawText(l, f, x, y, h, w, lRgb, bgRgb)
     fill(lRgb[0], lRgb[1], lRgb[2]);
     textSize(h);
     textFont("Helvetica");
-    
+
     // custom textAlign(CENTER)
     if ((l == 'm') || (l == 'M'))
     {
