@@ -9,7 +9,8 @@ var worldLinks = new Array(new Array()),
 var portalImage,
     treesImage;
 
-var textArray;
+var pageWords,
+    pageTextArray;
 
 // sarah
 
@@ -119,7 +120,7 @@ function setup()
 
       $('*').css({'cursor': 'none'});
 
-      textArray = extractPageText();
+      pageTextArray = extractPageText();
       buildWorld();
 
 
@@ -378,26 +379,28 @@ function loadLinks()
 
 };*/
 
-function isEnglish(word)
+function isEnglish(letter)
 {
-  var d = word.charCodeAt(0);
-  
-  return (
-      (d > 64 && d < 91) ||     // A-Z
-      (d > 96 && d < 123)       // a-z
-  );
+    return /^[a-zA-Z]+$/.test(letter);
+}
+
+function getEnglishWords(text)
+{
+    // /gi -> /g for unicode
+    return /\b[^\d\W]+\b/gi.exec(text);
 }
 
 function extractPageText()
 {
     var array = [],
-        raw = $('p').text();
+        text = $('p').text();
 
-    console.log(raw);
+    pageWords = getEnglishWords(text);
+    console.log(pageWords);
 
-    for (var i = 0; i < raw.length; i++)
+    for (var i = 0; i < text.length; i++)
     {
-        var letter = raw[i];
+        var letter = text[i];
 
         if ((letter != '') && (isEnglish(letter)))
         {
@@ -405,7 +408,6 @@ function extractPageText()
         }
     }
 
-    console.log(array);
     return array;
 }
 
@@ -442,7 +444,7 @@ function drawMap()
                 pixelXPos = i * pixelHeight,
                 pixelYPos = j * pixelWidth;
 
-            var letter = textArray[i + j];
+            var letter = pageTextArray[i + j];
             letter = letter.toUpperCase();
 
             if (open)
