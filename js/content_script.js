@@ -108,12 +108,15 @@ function setup()
       buildWorld();
       initArrays();
       extractPageText();
+      lastKeyPressedTimer = millis();
     }
     else {
       noLoop();
     }
   });
 }
+
+var lastKeyPressedTimer;
 
 function draw()
 {
@@ -224,6 +227,20 @@ function addGravity()
 
 function keyPressed(isJumping)
 {
+    // slow down keypress speed
+    if (millis() - lastKeyPressedTimer < 80)
+    {
+        fill(0, 0, 0, 80);
+        rect(creatureX * world.cellSize,
+             creatureY * world.cellSize,
+             world.cellSize, world.cellSize);
+        return;
+    }
+    else
+    {
+        lastKeyPressedTimer = millis();
+    }
+
   // make sure it is faster than vertical browser scroll follow
   var pixelStep = 30;
 
