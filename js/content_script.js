@@ -1,6 +1,7 @@
 var running = false;
 
-var world,   // .grid[x or width][y or height]
+// world.grid = [height, width] = [rows, columns]
+var world,
     door = {};
 
 var worldLinks = new Array(new Array()),
@@ -36,8 +37,8 @@ window.addEventListener("keydown", function(e) {
 function buildWorld()
 {
 	world = new CAWorld({
-		width: 60,
-		height: 60,
+		height: 15,
+		width: 20,
 		//height: Math.ceil($(document).height() / 64),
 		cellSize: 64
 	});
@@ -327,7 +328,7 @@ function loadLinks()
     {
         for (var j = 0; j < world.height; j++)
         {
-            var open = world.grid[i][j].open,
+            var open = world.grid[j][i].open,
                 pixelHeight = pixelWidth = world.cellSize,
                 pixelXPos = i * pixelHeight,
                 pixelYPos = j * pixelWidth;
@@ -338,11 +339,11 @@ function loadLinks()
             {
                 // TODO more random positions on worldLinks 2d map
 
-                worldLinks[i][j] = links.pop(links.length - 1);
+                worldLinks[j][i] = links.pop(links.length - 1);
             }
             else
             {
-                worldLinks[i][j] = '';
+                worldLinks[j][i] = '';
             }
         }
     }
@@ -429,7 +430,7 @@ function extractPageText()
         {
             if (line[j])
             {
-                pageLetters[i][j] = line[j];
+                pageLetters[j][i] = line[j];
             }
         }
     }
@@ -466,12 +467,12 @@ function drawMap()
     {
         for (var j = 0; j < world.height; j++)
         {
-            var open = world.grid[i][j].open,
+            var open = world.grid[j][i].open,
                 pixelHeight = pixelWidth = world.cellSize,
-                pixelXPos = i * pixelHeight,
-                pixelYPos = j * pixelWidth;
+                pixelXPos = j * pixelHeight,
+                pixelYPos = i * pixelWidth;
 
-            var letter = pageLetters[i][j];
+            var letter = pageLetters[j][i];
             letter = letter ? letter.toUpperCase() : '';
 
             if (open)
@@ -489,7 +490,7 @@ function drawMap()
                          [0, 0, 0]);
             }
             // links
-            if (open && (worldLinks[i][j] != ''))
+            if (open && (worldLinks[j][i] != ''))
             {
                 fill(220, 100, 100);
                 rect(pixelXPos, pixelYPos, pixelHeight, pixelWidth);
