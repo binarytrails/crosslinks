@@ -143,7 +143,7 @@ function draw()
     //evolveCharacter();
     
     // draws chacacter
-    isJumping = drawCreature();
+    isJumping = false;// addGravity();
     keyPressed(isJumping);
     
     drawMouse();
@@ -151,10 +151,9 @@ function draw()
     cellContentInteraction();
 
     // window scroll
-    /*$('html, body').animate({
-        scrollTop: $("body").offset().top +
-                   (creatureY / 2 * world.cellSize),
-    }, 0);*/
+    $('html, body').animate({
+        scrollTop: creatureY * world.cellSize - 100,
+    }, 0);
 }
 
 var capturedLetters = [];
@@ -196,7 +195,7 @@ function onGround()
     return (fromGround() == 0);
 }
 
-function drawCreature()
+function addGravity()
 {
     var isJumping = false;
 
@@ -248,7 +247,7 @@ function keyPressed(isJumping)
       }
       // jump
       else if (keyIsDown (UP_ARROW) &&
-              (fromGround() < 3) &&
+              //(fromGround() < 3) &&
               world.grid[creatureX][creatureY - 1].open)
 
       {
