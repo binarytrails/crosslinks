@@ -410,8 +410,17 @@ function drawText(l, f, x, y, h, w, lRgb, bgRgb)
     fill(lRgb[0], lRgb[1], lRgb[2]);
     textSize(h);
     textFont("Helvetica");
-    // x + h/5 serves as an textAlign(CENTER)
-    text(l, x + h/5, y, h, w);
+    
+    // custom textAlign(CENTER)
+    if ((l == 'm') || (l == 'M'))
+    {
+        x += (h / 20);
+    }
+    else if ((l != 'w') && (l != 'W'))
+    {
+        x += (h / 5);
+    }
+    text(l, x, y, h, w);
 }
 
 function drawMouse()
