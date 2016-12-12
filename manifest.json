@@ -3,7 +3,7 @@
 
   "name": "Crosslinks",
   "author": "Vsevolod Ivanov",
-  "description": "p5 party",
+  "description": "Exploring the Web with a playful gameplay",
   "version": "1.0",
 
   "icons": {
@@ -39,10 +39,7 @@
 
   "web_accessible_resources": [
     "images/whiteDoor.png",
-    "images/blackDoor.png",
-    "images/sprite01Left.png",
-    "images/sprite04Left.png",
-    "images/sprite04Right.png"
+    "images/blackDoor.png"
   ],
 
   "permissions": [

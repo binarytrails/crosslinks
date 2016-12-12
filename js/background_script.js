@@ -1,18 +1,3 @@
-/*
-
-Clockwork
-CART 351 Chrome Extension
-p5 Overlay
-
-You probably don't want to engage too deeply with the background
-script unless you have something that needs it.
-
-The basic functions here concern making the button work in the
-browser to pause and unpause the extension, and giving the icon
-a little badge to show whether the extension is on.
-
-*/
-
 function updateBadge(paused) {
   // This is an example of a really weird if statement syntax
   // I left it in from the template because it's good to encounter
