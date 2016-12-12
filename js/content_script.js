@@ -1,3 +1,20 @@
+/* Chrome Extension
+ * CART 351 - Concordia University
+ * Written by Vsevolod (Seva) Ivanov
+ *
+ * You can explore any webpage with this playful Chrome extension in a new way.
+ *
+ * - Map is generated with cellauto.js library using automata principles.
+ * - Text content is extracted from the page using a Regular Expression on
+ *   English ascii characters.
+ *
+ * Game controls :
+ *      arrows      - move around
+ *      enter       - enter the link (doors) on the current cell
+ *      space       - erase current cell
+ *      other keys  - write their content to the current cell
+ *      ctrl + r    - reload the current page
+ */
 var running = false;
 
 var body = document.getElementsByTagName('body')[0];
